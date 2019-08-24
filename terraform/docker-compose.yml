@@ -1,0 +1,16 @@
+version: '2'
+services:
+  terratools:
+    container_name: terratools
+    image: terratools:0.12.7
+    mem_limit: 1000m
+    build:
+      context: terratools
+      dockerfile: Dockerfile
+      args:
+      - TERRAFORM_VERSION=0.12.7
+    volumes:
+      - "awsconfig:/root"
+
+volumes:
+  awsconfig:
