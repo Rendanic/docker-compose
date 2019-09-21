@@ -10,7 +10,7 @@ RUN apk add unzip && \
     chmod a+x terra* aws*
 
 FROM alpine:latest
-RUN apk add bash bash-completion ca-certificates git jq vim ; rm -rf /var/lib/apt/lists/* && \
+RUN apk add bash bash-completion ca-certificates git jq vim openssh openssh-keygen groff && rm -rf /var/lib/apt/lists/* && \
     adduser -h /home/terraform -u 12345 -D terraform && \
     apk add py2-pip && pip install awscli && \
     rm -rf /root/.local
