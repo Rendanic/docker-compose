@@ -9,8 +9,10 @@ services:
       dockerfile: Dockerfile
       args:
       - TERRAFORM_VERSION=0.12.7
+      - TERRAGRUNT_VERSION=0.19.21
+      - AWS_VAULT_VERSION=4.6.3
     volumes:
-      - "awsconfig:/root"
+      - "awsconfig:/home/terraform"
 
 volumes:
   awsconfig:
