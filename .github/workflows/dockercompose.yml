@@ -1,10 +1,10 @@
-name: Docker Image CI
+name: Dockerhub Image CI
 
 on: [push]
-
-jobs:
   branches:
     - master
+
+jobs:
 
   build:
     runs-on: ubuntu-latest
