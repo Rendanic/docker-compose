@@ -9,10 +9,10 @@ export TERRAGRUNT_VERSION=$(git ls-remote --tags git://github.com/gruntwork-io/t
 cd $(dirname $basename)
 # Build latest version
 TERRAFORM_VERSION_latest=${TERRAFORM_VERSION}
-docker-compose build terratools
+docker-compose build terratools || exit 10
 
 for TERRAFORM_VERSION in $(cat terraform.version | grep -v ^# | grep -v ${TERRAFORM_VERSION_latest}) ; do
    echo "Using Terraform: ${TERRAFORM_VERSION}"
    export TERRAFORM_VERSION
-   docker-compose build terratools
+   docker-compose build terratools || exit 10
 done
