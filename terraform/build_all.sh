@@ -8,7 +8,7 @@ work_docker() {
 
    echo "#################################################"
    echo "#################################################"
-   echo "Using Terraform: ${TERRAFORM_VERSION}"
+   echo "Terraform version: ${TERRAFORM_VERSION}"
    docker-compose build terratools
 
    dockerimage="terratools:${TERRAFORM_VERSION}"
@@ -17,7 +17,12 @@ work_docker() {
 }
 
 if [ "$dockerpass" -a "$dockeruser" ] ; then
-   echo $dockerpass | docker login --password-stdin -u $dockeruser || rm -f "$docker_credentials"
+   echo $dockerpass | docker login --password-stdin -u $dockeruser
+   if [ "$?" -ne 0 ] ; then
+      echo "Login to dockerhub failed. Username: $dockeruser"
+      rm -f "$docker_credentials"
+      exit 9
+   fi
 fi
 
 # get latest tag from git-repositories
