@@ -37,4 +37,6 @@ for TERRAFORM_VERSION in $(cat terraform.version | grep -v ^# | grep -v ${TERRAF
 done
 
 echo "Remove Docker credentials"
-test -f "$docker_credentials" && rm -f "$docker_credentials"
+if [ -f "$docker_credentials" ] ; then
+   rm -f "$docker_credentials"
+fi
