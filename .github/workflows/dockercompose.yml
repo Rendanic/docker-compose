@@ -1,8 +1,9 @@
 name: Dockerhub Image CI
 
-on: [push]
-  branches:
-    - master
+on:
+  push:
+    branches:
+      - master
 
 jobs:
 
@@ -14,3 +15,5 @@ jobs:
     - name: Build Images for terratools
       run: terraform/build_all.sh
       shell: bash
+    - name: Show Images
+      run: docker images | grep ^terratools
