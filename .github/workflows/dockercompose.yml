@@ -15,5 +15,8 @@ jobs:
     - name: Build Images for terratools
       run: terraform/build_all.sh
       shell: bash
+      env:
+        dockerpass: $
+        dockeruser: $
     - name: Show Images
-      run: docker images | grep ^terratools
+      run: docker images | grep ^rendanic
