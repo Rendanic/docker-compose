@@ -2,15 +2,15 @@ version: '2'
 services:
   terratools:
     container_name: terratools
-    image: terratools:0.12.7
+    image: terratools:${TERRAFORM_VERSION}
     mem_limit: 1000m
     build:
       context: terratools
       dockerfile: Dockerfile
       args:
-      - TERRAFORM_VERSION=0.12.7
-      - TERRAGRUNT_VERSION=0.19.21
-      - AWS_VAULT_VERSION=4.6.3
+        - TERRAFORM_VERSION=${TERRAFORM_VERSION}
+        - TERRAGRUNT_VERSION=${TERRAGRUNT_VERSION}
+        - AWS_VAULT_VERSION=${AWS_VAULT_VERSION}
     volumes:
       - "awsconfig:/home/terraform"
 
