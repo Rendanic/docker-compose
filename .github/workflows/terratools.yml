@@ -1,6 +1,7 @@
 name: Dockerhub Image CI for terratools
 
 on:
+
   push:
     branches:
       - master
