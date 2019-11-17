@@ -9,7 +9,7 @@ work_docker() {
    echo "#################################################"
    echo "#################################################"
    echo "Terraform version: ${TERRAFORM_VERSION}"
-   docker-compose build terratools
+   docker-compose -f docker-compose_build.yml build terratools
 
    dockerimage="terratools:${TERRAFORM_VERSION}"
    docker tag ${dockerimage} rendanic/${dockerimage}
