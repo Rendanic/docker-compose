@@ -15,7 +15,7 @@ work_docker() {
 
    dockerimage="terratools:${TERRAFORM_VERSION}"
    docker tag "${dockerimage}" "$docker_owner/terratools:${dockerhubtag}"
-   test -f "$docker_credentials" && docker push "terratools:${dockerhubtag}"
+   test -f "$docker_credentials" && docker push "$docker_owner/terratools:${dockerhubtag}"
 }
 
 # shellcheck disable=SC2154
