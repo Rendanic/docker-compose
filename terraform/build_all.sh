@@ -14,12 +14,15 @@ work_docker() {
    docker-compose -f docker-compose_build.yml build terratools
 
    dockerimage="terratools:${TERRAFORM_VERSION}"
-   docker tag "${dockerimage}" "rendanic/terratools:${dockerhubtag}"
+   docker tag "${dockerimage}" "$docker_owner/terratools:${dockerhubtag}"
    test -f "$docker_credentials" && docker push "terratools:${dockerhubtag}"
 }
 
+# shellcheck disable=SC2154
 if [ "$dockerpass" -a "$dockeruser" ] ; then
-   echo $dockerpass | docker login --password-stdin -u $dockeruser
+
+   # shellcheck disable=SC2154
+   echo "$dockerpass" | docker login --password-stdin -u "$dockeruser"
    if [ "$?" -ne 0 ] ; then
       echo "Login to dockerhub failed. Username: $dockeruser"
       rm -f "$docker_credentials"
@@ -28,15 +31,18 @@ if [ "$dockerpass" -a "$dockeruser" ] ; then
 fi
 
 # get latest tag from git-repositories
-export TERRAFORM_VERSION=$(git ls-remote --tags git://github.com/hashicorp/terraform.git | cut -d"/" -f3- | cut -b2-| grep -v "\^" |  sort -t. -k 1,1n -k 2,2n -k 3,3n | tail -1)
-export AWS_VAULT_VERSION=$(git ls-remote --tags git://github.com/99designs/aws-vault.git | cut -d"/" -f3- | cut -b2-| grep -v "-" | sort -t. -k 1,1n -k 2,2n -k 3,3n | tail -1)
-export TERRAGRUNT_VERSION=$(git ls-remote --tags git://github.com/gruntwork-io/terragrunt.git | cut -d"/" -f3- | cut -b2-| sort -t. -k 1,1n -k 2,2n -k 3,3n | tail -1)
+TERRAFORM_VERSION=$(git ls-remote --tags git://github.com/hashicorp/terraform.git | cut -d"/" -f3- | cut -b2-| grep -v "\^" |  sort -t. -k 1,1n -k 2,2n -k 3,3n | tail -1)
+AWS_VAULT_VERSION=$(git ls-remote --tags git://github.com/99designs/aws-vault.git | cut -d"/" -f3- | cut -b2-| grep -v "-" | sort -t. -k 1,1n -k 2,2n -k 3,3n | tail -1)
+TERRAGRUNT_VERSION=$(git ls-remote --tags git://github.com/gruntwork-io/terragrunt.git | cut -d"/" -f3- | cut -b2-| sort -t. -k 1,1n -k 2,2n -k 3,3n | tail -1)
+export TERRAFORM_VERSION AWS_VAULT_VERSION TERRAGRUNT_VERSION
 
-cd $(dirname $basename)
+workdir=$(dirname "$basename")
+cd "$workdir"
 # Build latest version
 work_docker "$TERRAFORM_VERSION" "latest"
 
-for TERRAFORM_VERSION in $(cat terraform.version | grep -v ^#) ; do
+grep -v '^#' < terraform.version | while IFS= read -r TERRAFORM_VERSION
+do
    echo "Using Terraform: ${TERRAFORM_VERSION}"
    export TERRAFORM_VERSION
    work_docker "$TERRAFORM_VERSION" "$TERRAFORM_VERSION"
