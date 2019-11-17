@@ -34,10 +34,9 @@ export TERRAGRUNT_VERSION=$(git ls-remote --tags git://github.com/gruntwork-io/t
 
 cd $(dirname $basename)
 # Build latest version
-TERRAFORM_VERSION_latest=${TERRAFORM_VERSION}
 work_docker "$TERRAFORM_VERSION" "latest"
 
-for TERRAFORM_VERSION in $(cat terraform.version | grep -v ^# | grep -v ${TERRAFORM_VERSION_latest}) ; do
+for TERRAFORM_VERSION in $(cat terraform.version | grep -v ^#) ; do
    echo "Using Terraform: ${TERRAFORM_VERSION}"
    export TERRAFORM_VERSION
    work_docker "$TERRAFORM_VERSION" "$TERRAFORM_VERSION"
