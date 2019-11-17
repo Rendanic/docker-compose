@@ -6,14 +6,16 @@ docker_owner=rendanic
 
 work_docker() {
 
+   TERRAFORM_VERSION="$1"
+   dockerhubtag="$2"
    echo "#################################################"
    echo "#################################################"
    echo "Terraform version: ${TERRAFORM_VERSION}"
    docker-compose -f docker-compose_build.yml build terratools
 
    dockerimage="terratools:${TERRAFORM_VERSION}"
-   docker tag ${dockerimage} rendanic/${dockerimage}
-   test -f "$docker_credentials" && docker push ${docker_owner}/${dockerimage}
+   docker tag "${dockerimage}" "rendanic/terratools:${dockerhubtag}"
+   test -f "$docker_credentials" && docker push "terratools:${dockerhubtag}"
 }
 
 if [ "$dockerpass" -a "$dockeruser" ] ; then
@@ -33,12 +35,12 @@ export TERRAGRUNT_VERSION=$(git ls-remote --tags git://github.com/gruntwork-io/t
 cd $(dirname $basename)
 # Build latest version
 TERRAFORM_VERSION_latest=${TERRAFORM_VERSION}
-work_docker
+work_docker "$TERRAFORM_VERSION" "latest"
 
 for TERRAFORM_VERSION in $(cat terraform.version | grep -v ^# | grep -v ${TERRAFORM_VERSION_latest}) ; do
    echo "Using Terraform: ${TERRAFORM_VERSION}"
    export TERRAFORM_VERSION
-   work_docker
+   work_docker "$TERRAFORM_VERSION" "$TERRAFORM_VERSION"
 done
 
 echo "Remove Docker credentials"
