@@ -1,4 +1,4 @@
-name: Dockerhub Image CI
+name: Dockerhub Image CI for terratools
 
 on:
   push:
@@ -21,4 +21,4 @@ jobs:
         dockerpass: ${{ secrets.dockerpass }}
         dockeruser: ${{ secrets.dockeruser }}
     - name: Show Images
-      run: docker images | grep ^rendanic
+      run: docker images | grep ^rendanic | sort
