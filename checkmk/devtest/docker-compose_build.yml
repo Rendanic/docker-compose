@@ -1,0 +1,13 @@
+version: '2'
+services:
+  devtest:
+    container_name: checkmkdev
+    image: checkmkdev:latest
+    mem_limit: 1000m
+    build:
+      context: docker
+      dockerfile: Dockerfile
+    volumes:
+      - "git:/git"
+volumes:
+  git:
