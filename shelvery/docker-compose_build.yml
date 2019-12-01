@@ -1,0 +1,11 @@
+version: '2'
+services:
+  shelvery:
+    container_name: shelvery
+    image: shelvery:latest
+    mem_limit: 100m
+    build:
+      context: shelvery
+      dockerfile: Dockerfile
+      args:
+        - AWS_VAULT_VERSION=${AWS_VAULT_VERSION}

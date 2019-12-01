@@ -1,0 +1,15 @@
+version: '2'
+services:
+  shelvery:
+    container_name: shelvery
+    image: rendanic/shelvery:latest
+    mem_limit: 512m
+    volumes:
+      - "shelverydata:/shelvery"
+      - "awsconfig:/root/.aws"
+      - "awsvaultconfig:/root/.awsvault"
+
+volumes:
+  shelverydata:
+  awsconfig:
+  awsvaultconfig:
