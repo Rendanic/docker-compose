@@ -11,7 +11,7 @@ RUN apk add unzip && \
 
 FROM alpine:latest
 RUN apk add bash bash-completion ca-certificates git jq vim openssh openssh-keygen groff && rm -rf /var/lib/apt/lists/* && \
-    adduser -h /home/terraform -u 12345 -D terraform && \
+    adduser -h /home/terraform -s /bin/bash -u 12345 -D terraform && \
     apk add py2-pip && pip install awscli && \
     rm -rf /root/.local
 COPY --from=helper /aws-* /bin
