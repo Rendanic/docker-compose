@@ -3,9 +3,11 @@ services:
   terratools:
     container_name: terratools
     image: rendanic/terratools:${TERRAFORM_VERSION}
+    hostname: terratools-${TERRAFORM_VERSION}
     mem_limit: 1000m
     volumes:
       - "awsconfig:/home/terraform"
-
+    environment:
+      - "PS1=$$(whoami)@$$(hostname):$$(pwd) $$ "
 volumes:
   awsconfig:
