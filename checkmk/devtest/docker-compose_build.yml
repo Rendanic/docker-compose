@@ -9,5 +9,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - "git:/git"
+      - "/usr/share/zoneinfo/Europe/Berlin:/etc/localtime:ro"
 volumes:
   git:
