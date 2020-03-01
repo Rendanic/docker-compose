@@ -9,6 +9,6 @@ services:
       - "awsconfig:/home/terraform"
     environment:
       - "PS1=$$(whoami)@$$(hostname):$$(pwd) $$ "
-      - "TERRAGRUNT_DOWNLOAD=/tmp/.terragrunt_cache"
+      - "TsERRAGRUNT_DOWNLOAD=/home/terraform/.terragrunt_cache"
 volumes:
   awsconfig:
