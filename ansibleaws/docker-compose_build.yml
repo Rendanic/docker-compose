@@ -1,0 +1,17 @@
+version: '2'
+services:
+  ansibleaws:
+    container_name: ansibleaws
+    image: ansibleaws:${ANSIBLE_VERSION}
+    mem_limit: 1000m
+    build:
+      context: ansibleaws
+      dockerfile: Dockerfile
+      args:
+        - AWS_VAULT_VERSION=${AWS_VAULT_VERSION}
+        - ANSIBLE_VERSION=${ANSIBLE_VERSION}
+    volumes:
+      - "awsconfig:/home/terraform"
+
+volumes:
+  awsconfig:
