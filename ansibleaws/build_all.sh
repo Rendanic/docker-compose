@@ -1,5 +1,6 @@
 #!/bin/bash
 #
+# Script for building all Containers for Ansible from 2.2-2.9
 #
 dir=$(dirname $(basename $0))
 
