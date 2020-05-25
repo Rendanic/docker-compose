@@ -18,6 +18,12 @@ jobs:
       env:
         dockerpass: ${{ secrets.dockerpass }}
         dockeruser: ${{ secrets.dockeruser }}
+    - name: Build Images for ansibleaws
+      run: ansibleaws/build_all.sh
+      shell: bash
+      env:
+        dockerpass: ${{ secrets.dockerpass }}
+        dockeruser: ${{ secrets.dockeruser }}
     - name: Build Images for shelvery
       run: shelvery/build_all.sh
       shell: bash
