@@ -10,8 +10,3 @@ services:
       args:
         - AWS_VAULT_VERSION=${AWS_VAULT_VERSION}
         - ANSIBLE_VERSION=${ANSIBLE_VERSION}
-    volumes:
-      - "awsconfig:/home/terraform"
-
-volumes:
-  awsconfig:
