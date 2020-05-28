@@ -1,0 +1,12 @@
+version: '2'
+services:
+  sam:
+    container_name: sam
+    image: sam:latest
+    hostname: sam
+    mem_limit: 1000m
+    build:
+      context: sam
+      dockerfile: Dockerfile
+    environment:
+      - "PS1=$$(whoami)@$$(hostname):$$(pwd) $$ "

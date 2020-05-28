@@ -12,6 +12,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Build Images for AWS SAM
+      run: sam/build.sh
+      shell: bash
+      env:
+        dockerpass: ${{ secrets.dockerpass }}
+        dockeruser: ${{ secrets.dockeruser }}
     - name: Build Images for ansibleaws
       run: ansibleaws/build_all.sh
       shell: bash
