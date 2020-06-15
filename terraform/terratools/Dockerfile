@@ -1,4 +1,4 @@
-FROM alpine:latest as helper
+FROM alpine:3.12 as helper
 ARG TERRAFORM_VERSION
 ARG TERRAGRUNT_VERSION
 ARG AWS_VAULT_VERSION
@@ -9,7 +9,7 @@ RUN apk add --no-cache unzip && \
     wget -q https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip ; unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip ; rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
     chmod a+x terra* aws*
 
-FROM alpine:latest
+FROM alpine:3.12
 RUN apk add --no-cache bash bash-completion ca-certificates git tig jq vim openssh openssh-keygen groff && rm -rf /var/lib/apt/lists/* && \
     adduser -h /home/terraform -s /bin/bash -u 12345 -D terraform && \
     apk add --no-cache py2-pip && pip install awscli && \
