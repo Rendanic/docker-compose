@@ -16,8 +16,14 @@ services:
       - type: bind
         source: $HOME
         target: /root
+      # Socket for SSH-Agent
+      - type: bind
+        source: ${SSH_AUTH_SOCK}
+        target: ${SSH_AUTH_SOCK}
     environment:
       - "PS1=$$(hostname):$$(pwd) $$ "
       - "TERRAGRUNT_DOWNLOAD=/root/.terragrunt_cache_docker"
       # needed for using aws-Vault in automatic deployment environments
       - "AWS_VAULT_FILE_PASSPHRASE=${AWS_VAULT_FILE_PASSPHRASE}"
+      # needed for SSH-Agent
+      - "SSH_AUTH_SOCK=${SSH_AUTH_SOCK}"
