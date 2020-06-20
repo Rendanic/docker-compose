@@ -41,7 +41,8 @@ cd "$workdir"
 # Build latest version
 work_docker "$TERRAFORM_VERSION" "latest"
 
-grep -v '^#' < terraform.version | while IFS= read -r TERRAFORM_VERSION
+echo "Building latest 3 stable Versions of Terraform"
+for TERRAFORM_VERSION in $(git ls-remote --tags git://github.com/hashicorp/terraform.git | cut -d"/" -f3- | cut -b2-| egrep -v "\^|-beta" |  sort -t. -k 1,1n -k 2,2n -k 3,3n | tail -3)
 do
    echo "Using Terraform: ${TERRAFORM_VERSION}"
    export TERRAFORM_VERSION
