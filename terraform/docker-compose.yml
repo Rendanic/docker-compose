@@ -15,9 +15,9 @@ services:
       # binding for AWS-Credentials, SSH etc.
       - type: bind
         source: $HOME
-        target: /root
+        target: $HOME
     environment:
       - "PS1=$$(hostname):$$(pwd) $$ "
-      - "TERRAGRUNT_DOWNLOAD=/root/.terragrunt_cache_docker"
+      - "TERRAGRUNT_DOWNLOAD=$${HOME}/.terragrunt_cache_docker"
       # needed for using aws-Vault in automatic deployment environments
       - "AWS_VAULT_FILE_PASSPHRASE=${AWS_VAULT_FILE_PASSPHRASE}"

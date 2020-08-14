@@ -6,4 +6,4 @@ wdir=$(dirname $0)
 echo ${wdir}
 
 cd $wdir
-docker-compose run --rm -u terraform -w /home/terraform/${2} terratools bash
+docker-compose run --rm -u ${containeruser:-"$USER"} -e HOME=/home/terraform -w ${2:-"/home/terraform/"} terratools bash
