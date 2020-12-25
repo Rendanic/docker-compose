@@ -1,0 +1,23 @@
+version: '2.3'
+services:
+  terratools:
+    container_name: terratools
+    image: rendanic/terratools:${TERRAFORM_VERSION}
+    hostname: terratools-${TERRAFORM_VERSION}
+    mem_limit: 1000m
+    # define you own workdir
+    working_dir: /git
+    volumes:
+      # binding for workdir
+      - type: bind
+        source: $HOME/git
+        target: /git
+      # binding for AWS-Credentials, SSH etc.
+      - type: bind
+        source: $HOME
+        target: $HOME
+    environment:
+      - "PS1=$$(hostname):$$(pwd) $$ "
+      - "TERRAGRUNT_DOWNLOAD=$${HOME}/.terragrunt_cache_docker"
+      # needed for using aws-Vault in automatic deployment environments
+      - "AWS_VAULT_FILE_PASSPHRASE=${AWS_VAULT_FILE_PASSPHRASE}"

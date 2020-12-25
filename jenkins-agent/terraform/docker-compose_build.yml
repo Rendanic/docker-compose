@@ -1,0 +1,18 @@
+version: '2'
+services:
+  terratools-jenkins:
+    container_name: terratools-jenkins
+    image: terratools-jenkins:${TERRAFORM_VERSION}
+    mem_limit: 1000m
+    build:
+      context: terratools
+      dockerfile: Dockerfile
+      args:
+        - TERRAFORM_VERSION=${TERRAFORM_VERSION}
+        - TERRAGRUNT_VERSION=${TERRAGRUNT_VERSION}
+        - AWS_VAULT_VERSION=${AWS_VAULT_VERSION}
+    volumes:
+      - "awsconfig:/home/terraform"
+
+volumes:
+  awsconfig:
