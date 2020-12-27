@@ -30,7 +30,7 @@ RUN cd /git/ansible && make && make rpm
 FROM centos:7
 
 RUN yum install -y bash bash-completion ca-certificates cvJ vim \
-      openssh openssh-keygen groff python-jinja2 python-yaml \
+      openssh openssh-keygen openssh-clients groff python-jinja2 python-yaml \
       python-argcomplete less python2-crypto.x86_64
 
 RUN curl -q "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py" && \
