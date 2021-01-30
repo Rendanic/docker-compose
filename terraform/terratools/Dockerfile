@@ -1,19 +1,34 @@
-FROM alpine:latest as helper
+FROM centos:8
+
+LABEL maintainer="Thorsten Bruhns"
+
 ARG TERRAFORM_VERSION
 ARG TERRAGRUNT_VERSION
 ARG AWS_VAULT_VERSION
 
-RUN apk add --no-cache unzip && \
-    wget -q https://github.com/99designs/aws-vault/releases/download/v${AWS_VAULT_VERSION}/aws-vault-linux-amd64 ; mv aws-vault-linux-amd64 aws-vault &&\
-    wget -q https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 ; mv terragrunt_linux_amd64 terragrunt && \
-    wget -q https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip ; unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip ; rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-    chmod a+x terra* aws*
-
-FROM alpine:3.10
-RUN apk add --no-cache bash bash-completion ca-certificates git tig jq vim openssh openssh-keygen groff && rm -rf /var/lib/apt/lists/* && \
-    adduser -h /home/terraform -s /bin/bash -u 12345 -D terraform && \
-    apk add --no-cache py2-pip && pip install awscli && \
+RUN yum install -y epel-release && \
+    yum update -y && \
+    yum install -y bash bash-completion git jq vim openssh \
+      python38 unzip curl && \
+    yum clean all && rm -rf /var/cache/yum && \
+    useradd -d /home/terraform -m -s /bin/bash -u 12345 terraform && \
     rm -rf /root/.local
-COPY --from=helper /aws-* /bin
-COPY --from=helper /terra* /bin/
+
+RUN mkdir /tmp/aws && cd /tmp/aws && \
+    curl -q "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/aws/awscliv2.zip" && \
+      unzip awscliv2.zip && \
+        cd aws && \
+          ./install && \
+      /usr/local/bin/aws --version && \
+    echo "aws-vault" && \
+      curl -L -q "https://github.com/99designs/aws-vault/releases/download/v${AWS_VAULT_VERSION}/aws-vault-linux-amd64" -o /usr/local/bin/aws-vault && \
+    echo "terragrunt" && \
+      curl -L -q "https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64" -o /usr/local/bin/terragrunt && \
+    echo "terraform" && \
+      curl -L -q "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -o terraform.zip && \
+      unzip terraform.zip && \
+      mv terraform /usr/local/bin/terraform && \
+    chmod a+x /usr/local/bin/* && \
+    cd /tmp && rm -rf /tmp/aws
+
 CMD ["su", "-u terraform", "/bin/aws-vault"]
