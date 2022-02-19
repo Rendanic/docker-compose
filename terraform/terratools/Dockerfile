@@ -1,4 +1,4 @@
-FROM centos:8
+FROM oraclelinux:8
 
 LABEL maintainer="Thorsten Bruhns"
 
@@ -6,11 +6,12 @@ ARG TERRAFORM_VERSION
 ARG TERRAGRUNT_VERSION
 ARG AWS_VAULT_VERSION
 
-RUN yum install -y epel-release && \
+RUN yum install -y oracle-epel-release-el8 && \
     yum update -y && \
     yum install -y bash bash-completion git jq vim openssh \
-      python38 unzip curl && \
-    yum clean all && rm -rf /var/cache/yum && \
+      python38 python38-pip unzip curl && \
+    pip3 install oci-cli
+RUN yum clean all && rm -rf /var/cache/yum && \
     useradd -d /home/terraform -m -s /bin/bash -u 12345 terraform && \
     rm -rf /root/.local
 
