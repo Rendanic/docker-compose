@@ -17,7 +17,7 @@ services:
         source: $HOME
         target: $HOME
     environment:
-      - "PS1=$$(hostname):$$(pwd) $$ "
+      - "PS1=$${HOSTNAME}:$$(pwd) $$ "
       - "TERRAGRUNT_DOWNLOAD=$${HOME}/.terragrunt_cache_docker"
       # needed for using aws-Vault in automatic deployment environments
       - "AWS_VAULT_FILE_PASSPHRASE=${AWS_VAULT_FILE_PASSPHRASE}"
