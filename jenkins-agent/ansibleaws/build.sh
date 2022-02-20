@@ -3,7 +3,7 @@ basename=$0
 
 docker_credentials=~/.docker/config.json
 docker_owner=rendanic
-containername="ansibleaws"
+containername="jenkins_agent-ansibleaws"
 export VERSION="$1"
 export ANSIBLE_VERSION="$VERSION"
 

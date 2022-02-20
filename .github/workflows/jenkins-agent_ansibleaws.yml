@@ -7,7 +7,7 @@ on:
       - master
     paths:
       - jenkins-agent/ansibleaws/github_build.sh
-      - jenkins-agent/ansibleaws/ansibleaws/Dockerfile
+      - jenkins-agent/ansibleaws/jenkins_agent-ansibleaws/Dockerfile
 
 jobs:
 
