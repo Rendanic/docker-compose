@@ -6,7 +6,8 @@ on:
     branches:
       - master
     paths:
-    - 'ansibleaws/ansibleawss/Dockerfile'
+      - jenkins-agent/ansibleaws/github_build.sh
+      - jenkins-agent/ansibleaws/ansibleaws/Dockerfile
 
 jobs:
 
