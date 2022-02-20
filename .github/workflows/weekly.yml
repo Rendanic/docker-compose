@@ -24,5 +24,12 @@ jobs:
       env:
         dockerpass: ${{ secrets.dockerpass }}
         dockeruser: ${{ secrets.dockeruser }}
+    - name: Build Images for Jenkins-Agent ansibleaws
+      run: jenkins-agent/ansibleaws/github_build.sh
+      shell: bash
+      env:
+        dockerpass: ${{ secrets.dockerpass }}
+        dockeruser: ${{ secrets.dockeruser }}
+
     - name: Show Images
       run: docker images | grep ^rendanic | sort
