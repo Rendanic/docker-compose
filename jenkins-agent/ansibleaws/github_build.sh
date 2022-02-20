@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 #
+# (c) Thorsten Bruhns <thorsten.bruhns@googlemail.com>
 
 workdir=$(dirname "$0")
 
