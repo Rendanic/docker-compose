@@ -13,7 +13,7 @@ ARG ANSIBLE_VERSION
 USER root
 
 RUN apt-get update && \
-    apt-get -y install vim ca-certificates git jq vim openssh-client groff && \
+    apt-get -y install vim ca-certificates git jq vim openssh-client sshpass groff && \
     apt-get -y install python3-pip python3-docker && \
     python3 -m pip install --user --upgrade pip && \
     pip3 install awscli boto boto3 ec2 docker
