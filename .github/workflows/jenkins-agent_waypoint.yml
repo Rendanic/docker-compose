@@ -1,0 +1,26 @@
+name: CI Jenkins-Agent waypoint
+
+on:
+
+  push:
+    branches:
+      - master
+    paths:
+      - jenkins-agent/waypoint/build.sh
+      - jenkins-agent/waypoint/jenkins_agent-waypoint/Dockerfile
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build Jenkins-Agent waypoint
+      run: jenkins-agent/waypoint/build.sh
+      shell: bash
+      env:
+        dockerpass: ${{ secrets.dockerpass }}
+        dockeruser: ${{ secrets.dockeruser }}
+    - name: Show Images
+      run: docker images | grep ^rendanic | sort

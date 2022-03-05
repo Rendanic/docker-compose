@@ -1,0 +1,9 @@
+version: '2'
+services:
+  jenkins_agent-waypoint:
+    container_name: jenkins_agent-waypoint
+    image: jenkins_agent-waypoint:latest
+    mem_limit: 1000m
+    build:
+      context: jenkins_agent-waypoint
+      dockerfile: Dockerfile
