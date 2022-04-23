@@ -1,0 +1,26 @@
+name: CI Jenkins-Agent nomad
+
+on:
+
+  push:
+    branches:
+      - master
+    paths:
+      - jenkins-agent/nomad/build.sh
+      - jenkins-agent/nomad/jenkins_agent-nomad/Dockerfile
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build Jenkins-Agent nomad
+      run: jenkins-agent/nomad/build.sh
+      shell: bash
+      env:
+        dockerpass: ${{ secrets.dockerpass }}
+        dockeruser: ${{ secrets.dockeruser }}
+    - name: Show Images
+      run: docker images | grep ^rendanic | sort

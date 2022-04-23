@@ -1,0 +1,9 @@
+version: '2'
+services:
+  jenkins_agent-nomad:
+    container_name: jenkins_agent-nomad
+    image: jenkins_agent-nomad:latest
+    mem_limit: 1000m
+    build:
+      context: jenkins_agent-nomad
+      dockerfile: Dockerfile
